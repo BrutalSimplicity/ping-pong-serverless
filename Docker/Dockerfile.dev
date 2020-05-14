@@ -1,0 +1,6 @@
+FROM python:3.8.2-buster
+
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt-get update && \
+    apt-get install -y nodejs
+RUN pip install pipenv awscli boto3

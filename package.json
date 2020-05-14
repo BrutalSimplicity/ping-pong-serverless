@@ -1,0 +1,16 @@
+{
+  "name": "ping-pong-serverless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serverless": "^1.70.1",
+    "serverless-multi-stack": "^0.1.1",
+    "serverless-python-requirements": "^5.1.0"
+  }
+}

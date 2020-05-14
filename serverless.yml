@@ -1,0 +1,17 @@
+service:
+  name: ping-pong-entrypoint
+
+provider:
+  name: aws
+
+plugins:
+  - serverless-multi-stack
+
+custom:
+  multi-stack:
+    stacks:
+      ./ping/serverless.yml:
+      ./pong/serverless.yml:
+
+    regions:
+      us-east-1:
