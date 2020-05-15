@@ -1,4 +1,4 @@
-MAKEFILE_DIRS = ping pong
+MAKEFILE_DIRS = pong ping
 STAGE=dev
 REGION=us-east-1
 

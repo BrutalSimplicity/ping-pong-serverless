@@ -3,11 +3,26 @@ service: ping-service
 provider:
   name: aws
   runtime: python3.8
+  deploymentBucket:
+    name: ${cf:pong-service-${opt:stage}.ServerlessDeploymentBucketName}
   environment:
-    PYTHONPATH: /var/task/src:/opt/python
+    PYTHONPATH: /var/task/src:$PYTHONPATH
+    PONG_FUNCTION_ARN: ${self:custom.pongFunctionArn}
   memorySize: 256
   apiKeys:
     - abracadabra
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - lambda:InvokeFunction
+      Resource: ${self:custom.pongFunctionArn}
+    - Effect: 'Allow'
+      Action:
+        - events:PutEvents
+      Resource: !Join ["", [ "arn:aws:events:${opt:region}:", !Ref AWS::AccountId, ":event-bus/*"]]
+
+custom:
+  pongFunctionArn: ${cf:pong-service-${opt:stage}.LambdaFunctionArn}
 
 plugins:
   - serverless-python-requirements
@@ -22,6 +37,7 @@ package:
 functions:
   ping:
     handler: src/index.handler
+    tracing: Active
     events:
       - http:
           path: /

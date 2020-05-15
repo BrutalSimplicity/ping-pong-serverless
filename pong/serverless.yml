@@ -3,12 +3,13 @@ service: pong-service
 provider:
   name: aws
   runtime: python3.8
-  deploymentBucket:
-    name: ${cf:ping-service-${opt:stage}.ServerlessDeploymentBucketName}
   environment:
     PYTHONPATH: /var/task/src:/opt/python
   iamRoleStatements:
-    - 
+    - Effect: 'Allow'
+      Action:
+        - events:PutEvents
+      Resource: !Join ["", [ "arn:aws:events:${opt:region}:", !Ref AWS::AccountId, ":event-bus/*"]]
 
 plugins:
   - serverless-python-requirements
@@ -23,3 +24,9 @@ package:
 functions:
   pong:
     handler: src/index.handler
+    tracing: Active
+
+resources:
+  Outputs:
+    LambdaFunctionArn:
+      Value: !GetAtt PongLambdaFunction.Arn
