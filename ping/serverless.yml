@@ -8,9 +8,7 @@ provider:
   environment:
     PYTHONPATH: /var/task/src:$PYTHONPATH
     PONG_FUNCTION_ARN: ${self:custom.pongFunctionArn}
-  memorySize: 256
-  apiKeys:
-    - abracadabra
+  memorySize: 128
   iamRoleStatements:
     - Effect: 'Allow'
       Action:
@@ -20,6 +18,18 @@ provider:
       Action:
         - events:PutEvents
       Resource: !Join ["", [ "arn:aws:events:${opt:region}:", !Ref AWS::AccountId, ":event-bus/*"]]
+  resourcePolicy:
+    - Effect: Deny
+      Action:
+        - execute-api:Invoke
+      Principal: "*"
+      Resource:
+        - arn:aws:execute-api:us-east-1:*:*/${opt:stage}/*
+      Condition:
+        StringNotLike:
+          aws:PrincipalArn:
+            - arn:aws:iam::*:role/swa/SWACSCloudAdmin
+            - arn:aws:iam::*:role/swa/SWACSDevelope
 
 custom:
   pongFunctionArn: ${cf:pong-service-${opt:stage}.LambdaFunctionArn}
@@ -40,6 +50,6 @@ functions:
     tracing: Active
     events:
       - http:
+          authorizer: aws_iam
           path: /
-          method: post
-          private: true
+          method: get

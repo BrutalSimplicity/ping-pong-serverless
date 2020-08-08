@@ -33,6 +33,7 @@ def handler(event, context):
                 'Start': start,
                 'End': end,
                 'Delta': end - start
-            }
+            },
+            'Event': event
         })
     }
