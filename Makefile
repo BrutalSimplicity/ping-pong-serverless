@@ -1,8 +1,28 @@
-MAKEFILE_DIRS = pong ping
+LAMBDA_DIRS=pong ping
+TEST_DIRS=pong ping shared/code
 STAGE=dev
-REGION=us-east-1
+REGIONS=us-east-1 us-west-2
 
 deploy:
-	for dir in $(MAKEFILE_DIRS); do \
-		$(MAKE) -C $$dir deploy; \
+	for dir in $(LAMBDA_DIRS); do \
+		for region in REGIONS; do \
+			REGION=$$region $(MAKE) -C $$dir deploy; \
+		done
+	done
+
+test:
+	for dir in $(TEST_DIRS); do \
+		$(MAKE) -C $$dir test; \
+	done
+
+package:
+	for dir in $(LAMBDA_DIRS); do \
+		$(MAKE) -C $$dir package; \
+	done
+
+destroy:
+	for dir in $(LAMBDA_DIRS); do \
+		for region in REGIONS; do \
+			REGION=$$region $(MAKE) -C $$dir destroy; \
+		done
 	done

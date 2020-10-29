@@ -7,12 +7,35 @@
 			"path": "ping"
 		},
 		{
-			"name": "shared",
-			"path": "shared/code"
+			"path": "pong"
 		},
 		{
-			"path": "pong"
+			"name": "shared",
+			"path": "shared/code"
 		}
 	],
-	"settings": {}
+	"extensions": {
+		"recommendations": [
+			"ms-python.python",
+			"ms-python.vscode-pylance",
+			"ThreadHeap.serverless-ide-vscode"
+		]
+	},
+	"settings": {
+		"python.linting.pylintEnabled": false,
+		"python.linting.flake8Enabled": true,
+		"python.linting.enabled": true,
+		"python.linting.flake8Args": [
+			"--max-line-length=120",
+			"--ignore=E3,E128,W503"
+		],
+		"python.pythonPath": ".venv/bin/python",
+		"python.testing.pytestArgs": [
+			"tests"
+		],
+		"python.testing.unittestEnabled": false,
+		"python.testing.nosetestsEnabled": false,
+		"python.testing.pytestEnabled": true,
+		"python.analysis.typeCheckingMode": "basic"
+	}
 }

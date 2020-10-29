@@ -30,6 +30,8 @@ provider:
           aws:PrincipalArn:
             - arn:aws:iam::*:role/swa/SWACSCloudAdmin
             - arn:aws:iam::*:role/swa/SWACSDevelope
+        StringNotEqual:
+          aws:PrincipalOrgId: o-
 
 custom:
   pongFunctionArn: ${cf:pong-service-${opt:stage}.LambdaFunctionArn}

@@ -10,5 +10,11 @@ setup-env:
 package:
 	$(SLS) package
 
+test:
+	pipenv run pytest tests -s -vvv $(current_dir)/tests/
+
 deploy:
 	$(SLS) deploy
+
+destroy:
+	$(SLS) destroy

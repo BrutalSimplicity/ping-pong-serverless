@@ -5,11 +5,14 @@ verify_ssl = true
 
 [dev-packages]
 flake8 = "*"
+boto3-type-annotations-with-docs = "*"
+pytest = "*"
 
 [packages]
 boto3 = "*"
 simplejson = "*"
 aws-xray-sdk = "*"
+boto3-type-annotations = "*"
 
 [requires]
 python_version = "3.8"
